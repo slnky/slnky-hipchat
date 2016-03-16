@@ -1,0 +1,7 @@
+{
+  "service": "chef-1234",
+  "level": "warn",
+  "hostname": "hostname",
+  "ipaddress": "127.0.0.1",
+  "message": "slnky.service.chef: node i-12345678 not found"
+}

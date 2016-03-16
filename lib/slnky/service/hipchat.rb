@@ -43,6 +43,8 @@ module Slnky
             @hipchat[room].send('slnky', message, notify: true)
           end
         end
+
+        true
       end
 
       def handler(name, data)
