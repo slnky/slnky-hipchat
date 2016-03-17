@@ -55,7 +55,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
-    slnky (0.6.0)
+    slnky (0.6.1)
       activesupport (~> 4.2.5.1)
       amqp (~> 1.5.1)
       dotenv (~> 2.1.0)
@@ -84,7 +84,7 @@ DEPENDENCIES
   hipchat
   rake
   rspec
-  slnky (~> 0.6.0)
+  slnky (~> 0.6.1)
 
 BUNDLED WITH
    1.11.2
