@@ -12,7 +12,7 @@ module Slnky
         @hipchat = HipChat::Client.new(@token)
       end
 
-      subscribe 'slnky.service.test', :handler
+      # subscribe 'slnky.service.test', :handler
       # you can also subscribe to heirarchies, this gets
       # all events under something.happened
       # subscribe 'something.happened.*', :other_handler
@@ -37,11 +37,8 @@ module Slnky
         return unless @levels.include?(level)
         message = "#{log.message} [from #{log.ipaddress}/#{log.service}]"
         @rooms.each do |room|
-          if development?
-            puts "hipchat[#{color}]: #{message}"
-          else
-            @hipchat[room].send('slnky', message, notify: true)
-          end
+          puts "hipchat[#{color}]: #{message}"
+          @hipchat[room].send('slnky', message, notify: true) unless development?
         end
 
         true
