@@ -1,0 +1,11 @@
+{
+  "name": "slnky.service.chat",
+  "payload": {
+    "chat": {
+      "room": "Notification Testing",
+      "message": "testing event chat message",
+      "notify": true,
+      "color": "purple"
+    }
+  }
+}

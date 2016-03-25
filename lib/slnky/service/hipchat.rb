@@ -17,6 +17,8 @@ module Slnky
       # all events under something.happened
       # subscribe 'something.happened.*', :other_handler
 
+      subscribe '*', :handle_event
+
       def run
         @channel.queue("service.hipchat.logs", durable: true).bind(@exchanges['logs']).subscribe do |raw|
           payload = parse(raw)
@@ -38,7 +40,7 @@ module Slnky
         message = "#{log.message} [from #{log.ipaddress}/#{log.service}]"
         @rooms.each do |room|
           puts "hipchat[#{color}]: #{message}"
-          @hipchat[room].send('slnky', message, notify: true) unless development?
+          @hipchat[room].send('slnky', message, notify: true, color: color) unless development?
         end
 
         true
@@ -46,6 +48,19 @@ module Slnky
 
       def handler(name, data)
         name == 'slnky.service.test' && data.hello == 'world!'
+      end
+
+      def handle_event(name, data)
+        if data.chat && data.chat.room && @rooms.include?(data.chat.room)
+          room = data.chat.room
+          color = data.chat.color || 'yellow'
+          notify = data.chat.notify == true
+          message = data.chat.message || "#{name} has no message"
+          format = data.chat.format || 'text'
+          # send data to room
+          @hipchat[room].send('slnky', message, notify: notify, color: color, message_format: format) unless development?
+        end
+        true
       end
     end
   end
