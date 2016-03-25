@@ -36,7 +36,7 @@ module Slnky
                   else
                     'green'
                 end
-        return unless @levels.include?(level)
+        return true unless @levels.include?(level)
         message = "#{log.message} [from #{log.ipaddress}/#{log.service}]"
         @rooms.each do |room|
           puts "hipchat[#{color}]: #{message}"
