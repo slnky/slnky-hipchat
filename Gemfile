@@ -13,3 +13,4 @@ gem 'rspec'
 gem 'rake'
 
 gem 'hipchat'
+gem 'travis'
