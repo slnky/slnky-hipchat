@@ -63,7 +63,7 @@ module Slnky
           message = data.chat.message || "#{name} has no message"
           format = data.chat.format || 'text'
           # send data to room
-          @hipchat[room].send('slnky', message, notify: notify, color: color, message_format: format) unless development?
+          @hipchat[room].send('SLNky', message, notify: notify, color: color, message_format: format) unless development?
         end
         true
       end
