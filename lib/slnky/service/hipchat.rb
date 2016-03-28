@@ -38,7 +38,6 @@ module Slnky
                 end
         return true unless @levels.include?(level)
         (service, message) = log.message.split(': ', 2)
-        user = "SLNky"
         message = "<b>#{message}</b><br/><i>#{log.ipaddress}/#{log.service}</i>"
         @rooms.each do |room|
           hipchat_send(room, message, notify: true, color: color, format: 'html')
