@@ -41,7 +41,7 @@ module Slnky
         user = "SLNky"
         message = "<b>#{message}</b><br/><i>#{log.ipaddress}/#{log.service}</i>"
         @rooms.each do |room|
-          hipchat_send(room, message, notify: true, color: color)
+          hipchat_send(room, message, notify: true, color: color, format: 'html')
         end
 
         true
@@ -54,7 +54,7 @@ module Slnky
       def handle_event(name, data)
         if data.chat && data.chat.message
           room = data.chat.room
-          message = data.chat.message
+          message = "<b>#{data.chat.message}</b><br/><i>event: #{name}</i>"
           hipchat_send(room, message, notify: data.chat.notify, color: data.chat.color, format: data.chat.format)
         end
         true
