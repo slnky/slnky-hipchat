@@ -37,10 +37,15 @@ module Slnky
                     'green'
                 end
         return true unless @levels.include?(level)
-        message = "#{log.message} [from #{log.ipaddress}/#{log.service}]"
+        (service, message) = log.message.split(': ', 2)
+        user = "SLNky"
+        message = "<b>#{message}</b><br/>(#{log.ipaddress}/#{log.service})"
         @rooms.each do |room|
-          puts "hipchat[#{color}]: #{message}"
-          @hipchat[room].send('slnky', message, notify: true, color: color) unless development?
+          if development?
+            puts "(#{color}) #{user}: #{message}"
+          else
+            @hipchat[room].send(user, message, notify: true, color: color)
+          end
         end
 
         true
