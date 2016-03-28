@@ -64,6 +64,8 @@ module Slnky
           format = data.chat.format || 'text'
           # send data to room
           @hipchat[room].send('SLNky', message, notify: notify, color: color, message_format: format) unless development?
+        else
+          log :info, "event #{name} no chat attributes? #{data.chat.inspect}"
         end
         true
       end
