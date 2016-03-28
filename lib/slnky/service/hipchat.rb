@@ -39,13 +39,9 @@ module Slnky
         return true unless @levels.include?(level)
         (service, message) = log.message.split(': ', 2)
         user = "SLNky"
-        message = "<b>#{message}</b><br/>(#{log.ipaddress}/#{log.service})"
+        message = "<b>#{message}</b><br/><i>#{log.ipaddress}/#{log.service}</i>"
         @rooms.each do |room|
-          if development?
-            puts "(#{color}) #{user}: #{message}"
-          else
-            @hipchat[room].send(user, message, notify: true, color: color)
-          end
+          hipchat_send(room, message, notify: true, color: color)
         end
 
         true
@@ -56,18 +52,30 @@ module Slnky
       end
 
       def handle_event(name, data)
-        if data.chat && data.chat.room && @rooms.include?(data.chat.room)
+        if data.chat && data.chat.message
           room = data.chat.room
-          color = data.chat.color || 'yellow'
-          notify = data.chat.notify == true
-          message = data.chat.message || "#{name} has no message"
-          format = data.chat.format || 'text'
-          # send data to room
-          @hipchat[room].send('SLNky', message, notify: notify, color: color, message_format: format) unless development?
-        else
-          log :info, "event #{name} no chat attributes? #{data.chat.inspect}"
+          message = data.chat.message
+          hipchat_send(room, message, notify: data.chat.notify, color: data.chat.color, format: data.chat.format)
         end
         true
+      end
+
+      def hipchat_send(room, message, options={})
+        o = {
+            color: 'yellow',
+            notify: true,
+            format: 'text',
+        }.merge(options)
+
+        user = 'SLNky'
+
+        if development?
+          puts "(#{o[:color]}) #{user}: #{message}"
+        else
+          @hipchat[room].send(user, message, notify: o[:notify], color: o[:color], message_format: o[:format])
+        end
+      rescue => e
+        log :error, "hipchat service: #{e.message}"
       end
     end
   end
