@@ -4,14 +4,11 @@ lock '3.4.0'
 set :application, 'slnky-hipchat'
 set :repo_url, 'git@github.com:slnky/slnky-hipchat.git'
 
-rubyversion = File.read('.ruby-version').chomp
-rubygemset = File.read('.ruby-gemset').chomp
-
 set :deploy_to, "#{ENV['DEPLOY_DIR']}/#{fetch(:application)}#{fetch(:stage) == 'staging' ? '-stg' : ''}"
 
 set :keep_releases, 5
 
-set :rvm_ruby_version, "#{rubyversion}@#{rubygemset}"      # Defaults to: 'default'
+set :rvm_ruby_version, File.read('.ruby-version').chomp     # Defaults to: 'default'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
