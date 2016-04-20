@@ -22,7 +22,7 @@ module Slnky
                 end
         return true unless @levels.include?(level)
         (service, message) = log.message.split(': ', 2)
-        message = "<b>#{message}</b><br/><i>#{log.ipaddress}/#{log.service}</i>"
+        message = "<b>#{message}</b><br/><i>#{log.service}</i>"
         @rooms.each do |room|
           hipchat_send(room, message, notify: true, color: color, format: 'html')
         end
@@ -35,7 +35,7 @@ module Slnky
         user = 'SLNky'
 
         if config.development?
-          puts "(#{o[:color]}) #{user}: #{message}"
+          puts "(#{o[:color]}) #{user}@#{room}: #{message}"
         else
           @hipchat[room].send(user, message, notify: o[:notify], color: o[:color], message_format: o[:format])
         end
@@ -48,7 +48,7 @@ module Slnky
             color: 'yellow',
             notify: true,
             format: 'text',
-        }.merge(options)
+        }.merge(options.delete_if{|k, v| v.nil? || v.blank? || v.empty?})
       end
     end
   end
