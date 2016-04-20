@@ -48,7 +48,7 @@ module Slnky
             color: 'yellow',
             notify: true,
             format: 'text',
-        }.merge(options.delete_if{|k, v| v.nil? || v.blank? || v.empty?})
+        }.merge(options.delete_if{|k, v| v.nil?})
       end
     end
   end
