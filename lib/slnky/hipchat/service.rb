@@ -30,7 +30,11 @@ module Slnky
       def handle_event(name, data)
         return nil unless data.chat && data.chat.message
         room = data.chat.room
-        message = "<b>#{data.chat.message}</b><br/><i>event: #{name}</i>"
+        message = data.chat.message
+        unless data.chat.format == 'html'
+          message = "<b>#{data.chat.message}</b><br/><i>event: #{name}</i>"
+          data.chat.format = 'html'
+        end
         client.hipchat_send(room, message, notify: data.chat.notify, color: data.chat.color, format: data.chat.format)
       end
     end
