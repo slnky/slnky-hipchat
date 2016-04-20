@@ -21,8 +21,7 @@ module Slnky
                     'green'
                 end
         return true unless @levels.include?(level)
-        (service, message) = log.message.split(': ', 2)
-        message = "<b>#{message}</b><br/><i>#{log.service}</i>"
+        message = "<b>#{log.message}</b><br/><i>#{log.service}</i>"
         @rooms.each do |room|
           hipchat_send(room, message, notify: true, color: color, format: 'html')
         end
