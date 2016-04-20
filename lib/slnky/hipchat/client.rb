@@ -6,7 +6,6 @@ module Slnky
       def initialize
         @token = config.hipchat.token
         @rooms = config.hipchat.rooms ? config.hipchat.rooms.split(',') : []
-        puts "ROOMS: #{@rooms.inspect}"
         @levels = config.hipchat.levels ? config.hipchat.levels.split(',').map(&:to_sym) : [:warn, :error]
         @hipchat = HipChat::Client.new(@token)
       end
