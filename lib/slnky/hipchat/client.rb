@@ -6,6 +6,7 @@ module Slnky
       def initialize
         @token = config.hipchat.token
         @rooms = config.hipchat.rooms ? config.hipchat.rooms.split(',') : []
+        puts "ROOMS: #{@rooms.inspect}"
         @levels = config.hipchat.levels ? config.hipchat.levels.split(',').map(&:to_sym) : [:warn, :error]
         @hipchat = HipChat::Client.new(@token)
       end
@@ -33,6 +34,12 @@ module Slnky
       def hipchat_send(room, message, options={})
         o = hipchat_options(options)
         user = 'SLNky'
+        unless room
+          @rooms.each do |r|
+            hipchat_send(r, message, options)
+          end
+          return
+        end
 
         if config.development?
           puts "(#{o[:color]}) #{user}@#{room}: #{message}"
