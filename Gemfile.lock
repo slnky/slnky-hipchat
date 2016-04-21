@@ -32,7 +32,7 @@ GEM
     docopt (0.5.0)
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
-    dotenv (2.1.0)
+    dotenv (2.1.1)
     ethon (0.8.1)
       ffi (>= 1.3.0)
     eventmachine (1.0.9.1)
@@ -94,7 +94,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
-    slnky (0.12.0)
+    slnky (0.12.2)
       activesupport (~> 4.2.5.1)
       amqp (~> 1.5.1)
       clamp (~> 1.0.0)
@@ -141,7 +141,7 @@ DEPENDENCIES
   hipchat
   rake
   rspec
-  slnky (~> 0.12.0)
+  slnky (~> 0.12.2)
   travis (~> 1.8.2)
 
 BUNDLED WITH
