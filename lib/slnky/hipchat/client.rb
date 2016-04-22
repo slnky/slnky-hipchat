@@ -8,6 +8,11 @@ module Slnky
         @rooms = config.hipchat.rooms ? config.hipchat.rooms.split(',') : []
         @levels = config.hipchat.levels ? config.hipchat.levels.split(',').map(&:to_sym) : [:warn, :error]
         @hipchat = HipChat::Client.new(@token)
+        @hipchat_rooms = @hipchat.rooms.inject({}) do |h, r|
+          k = r.name.downcase.gsub(/\s+/, '_')
+          h[k] = r.room_id
+          h
+        end
       end
 
       def logline(log)
@@ -38,7 +43,7 @@ module Slnky
           end
           return
         end
-
+        room = @hipchat_rooms[room] if @hipchat_rooms[room]
         if config.development?
           puts "(#{o[:color]}) #{user}@#{room}: #{message}"
         else

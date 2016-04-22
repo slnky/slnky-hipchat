@@ -2,7 +2,6 @@ module Slnky
   module Hipchat
     class Service < Slnky::Service::Base
       attr_writer :client
-
       def client
         @client ||= Slnky::Hipchat::Client.new
       end
