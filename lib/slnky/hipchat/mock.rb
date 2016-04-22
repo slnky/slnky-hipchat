@@ -3,9 +3,9 @@ module Slnky
     class Mock < Slnky::Hipchat::Client
       # unless there's something special you need to do in the initializer
       # use the one provided by the actual client object
-      # def initialize
-      #
-      # end
+      def initialize
+
+      end
 
       def logline(log)
         "#{log.level.upcase} #{log.message}"
