@@ -3,10 +3,12 @@ require 'hipchat'
 module Slnky
   module Hipchat
     class Client < Slnky::Client::Base
+      attr_accessor :logging
       def initialize
         @token = config.hipchat.token
         @rooms = config.hipchat.rooms ? config.hipchat.rooms.split(',') : []
         @levels = config.hipchat.levels ? config.hipchat.levels.split(',').map(&:to_sym) : [:warn, :error]
+        @logging = true
         @hipchat = HipChat::Client.new(@token)
         @hipchat_rooms = @hipchat.rooms.inject({}) do |h, r|
           k = r.name.downcase.gsub(/\s+/, '_')
@@ -16,6 +18,7 @@ module Slnky
       end
 
       def logline(log)
+        return unless @logging
         level = log.level.to_sym
         color = case level
                   when :warn
@@ -51,6 +54,7 @@ module Slnky
         end
       rescue => e
         log.error "hipchat service: #{e.message}"
+        log.debug "#{e.message}\n#{e.backtrace.first(5).join("\n")}"
       end
 
       def hipchat_options(options={})
