@@ -20,6 +20,6 @@ describe Slnky::Hipchat::Command do
 
   it 'handles help' do
     expect { subject.handle(help.name, help.payload, help_response) }.to_not raise_error
-    expect(help_response.trace).to include("hipchat has no additional commands")
+    expect(help_response.trace).to include("hipchat logging: manage hipchat log watching")
   end
 end
